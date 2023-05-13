@@ -1,16 +1,21 @@
 #include <iostream>
 #include "menu.hpp"
 #include "mainChar.hpp"
+#include "towers.hpp"
 #include "enemy_mobs.hpp"
 #include <SFML/Graphics.hpp>
 
 using namespace std;
 
+void updateView(sf::RenderWindow& window, sf::View& view);
+
 int main()
 {
-    sf::RenderWindow menu_window(sf::VideoMode(320, 320), "Menu");
+    sf::RenderWindow menu_window(sf::VideoMode(600, 600), "Menu");
     sf::RenderWindow instruct_win, gameWin;
+    sf::Texture backgroundTexture;
     MainMenu m;
+    Towers monkey1;
     MainPlayer mPlayer;
     EnemyMobs enemy1;
     vector<EnemyMobs> myClass;
@@ -38,26 +43,45 @@ int main()
                     if(menu_window.hasFocus() && m.pressedPlay(sf::Mouse::getPosition(menu_window).x,sf::Mouse::getPosition(menu_window).y ))
                     {
                         cout << "Clicked playBtn\n";
-                        gameWin.create(sf::VideoMode(500,600), "Walking");
+                        // <---Settting the window--->
+                        gameWin.create(sf::VideoMode(960, 960, 32), "TD-Game");
+                        const float aspectRatio = static_cast<float>(320) / 320;
+                        sf::View view(sf::FloatRect(0.f, 0.f, 320,320));
+                        if (aspectRatio > 1.f)
+                        {
+                            view.setSize(320 * aspectRatio, 320);
+                        }
+                        else
+                        {
+                            view.setSize(320, 320 / aspectRatio);
+                        }
+                        gameWin.setView(view);
+                        // <------------------------>
 
                         while(gameWin.isOpen())
                         {
                             gameWin.clear(sf::Color(255.f, 255.f, 255.f));
                             gameWin.draw(mPlayer.getPlayer());
                             gameWin.draw(myClass[0].getEnemy());
+                            gameWin.draw(monkey1.getTower());
                             gameWin.display();
 
+                            monkey1.set(30,50); // <---sets enemy--|
+                            
+                            // <---moves enemy till it reaches the goal--->
                             if (myClass[0].getTurn() > 60)
                                 {
-                                    myClass.clear();
+                                    int ox = 0;
                                 }
                                 else{
                                     myClass[0].move();
                                 }
-                            
+                            // <------------------------------------------>
+
                             sf::Event evGame;
                             while(gameWin.pollEvent(evGame))
                             {
+
                                 if(sf::Event::Closed == evGame.type && gameWin.hasFocus())
                                 {
                                     mPlayer.reset();
@@ -105,4 +129,10 @@ int main()
     }
 
     return 0;
+}
+
+void updateView(sf::RenderWindow& window, sf::View& view)
+{
+    float aspectRatio = static_cast<float>(window.getSize().x) / window.getSize().y;
+    view.setSize(320 * aspectRatio, 320);
 }

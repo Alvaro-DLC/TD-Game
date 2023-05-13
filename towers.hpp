@@ -16,11 +16,7 @@ class Towers
             {
                     // error...
             }
-            if (!towerText[1].loadFromFile("orange_enemy.png"))
-            {
-                    // error...
-            }
-            enemy.setTexture(towerText[0]);
+            tower.setTexture(towerText[0]);
         }
     
     sf::Sprite& getTower(){return tower;}
@@ -35,14 +31,14 @@ class Towers
     //     }
     // }
 
-    void reset()
+    void set(float x,float y)                                                                                  
         {
-            tower.setPosition(sf::Vector2f(0.f, 0.f));
+            tower.setPosition(sf::Vector2f(y, x));
         }
     
     private:
         sf::Clock timer;
-        sf::Sprite enemy;
+        sf::Sprite tower;
         sf::Texture towerText[2];
         int i, turn;
 

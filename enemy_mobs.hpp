@@ -27,13 +27,29 @@ class EnemyMobs
 
     void move()
     {
-        turn = 0
         if(timer.getElapsedTime().asMilliseconds() >= 100)
         {
-            enemy.move(sf::Vector2f(5.f, 0.f));
+            if (turn > 40 && turn <= 120)
+            {
+                enemy.move(sf::Vector2f(0.f, 4.f));
+                turn++;
+            }
+            else
+            {
+                enemy.move(sf::Vector2f(4.f, 0.f));
+                turn++;
+            }
+
             timer.restart();
         }
     }
+
+    void resetTurn()
+    {
+        turn = 0;
+    }
+
+    int getTurn()const {return turn;}
 
     void reset()
         {
@@ -44,7 +60,7 @@ class EnemyMobs
         sf::Clock timer;
         sf::Sprite enemy;
         sf::Texture enemyText[2];
-        int i, turn;
+        int i, turn = 0;
 
 };
 

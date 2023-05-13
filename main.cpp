@@ -8,11 +8,14 @@ using namespace std;
 
 int main()
 {
-    sf::RenderWindow menu_window(sf::VideoMode(300, 400), "Menu");
+    sf::RenderWindow menu_window(sf::VideoMode(320, 320), "Menu");
     sf::RenderWindow instruct_win, gameWin;
     MainMenu m;
     MainPlayer mPlayer;
     EnemyMobs enemy1;
+    vector<EnemyMobs> myClass;
+    myClass.push_back(enemy1);
+
 
     while (menu_window.isOpen())
     {
@@ -22,6 +25,7 @@ int main()
         menu_window.display();
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
+
         while (menu_window.pollEvent(event))
         {
             switch(event.type)
@@ -40,16 +44,27 @@ int main()
                         {
                             gameWin.clear(sf::Color(255.f, 255.f, 255.f));
                             gameWin.draw(mPlayer.getPlayer());
-                            gameWin.draw(enemy1.getEnemy());
+                            gameWin.draw(myClass[0].getEnemy());
                             gameWin.display();
-                            enemy1.move();
+
+                            if (myClass[0].getTurn() > 60)
+                                {
+                                    myClass.clear();
+                                }
+                                else{
+                                    myClass[0].move();
+                                }
+                            
                             sf::Event evGame;
                             while(gameWin.pollEvent(evGame))
                             {
                                 if(sf::Event::Closed == evGame.type && gameWin.hasFocus())
                                 {
                                     mPlayer.reset();
+                                    myClass[0].reset();
+                                    myClass[0].resetTurn();
                                     gameWin.close();
+                
                                 }
                                 
                                 else if(sf::Event::MouseButtonReleased == evGame.type && gameWin.hasFocus())

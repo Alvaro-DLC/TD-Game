@@ -3,6 +3,7 @@
 #include "mainChar.hpp"
 #include "towers.hpp"
 #include "enemy_mobs.hpp"
+#include "buy.hpp"
 #include <SFML/Graphics.hpp>
 
 using namespace std;
@@ -18,6 +19,7 @@ int main()
     Towers monkey1;
     MainPlayer mPlayer;
     EnemyMobs enemy1;
+    Buy btn;
     vector<EnemyMobs> myClass;
     myClass.push_back(enemy1);
 
@@ -65,6 +67,42 @@ int main()
                             gameWin.draw(myClass[0].getEnemy());
                             gameWin.draw(monkey1.getTower());
                             gameWin.display();
+                            // attempting buttonbelow
+                            gamewin.draw(btn.getBuy());
+                            btn.set(30,50);
+                            bool showM = false
+                            if (event.type == sf::Event::MouseButtonPressed)
+                            {
+                                if (event.mouseButton.button == sf::Mouse::Left)
+                                {
+                                    // Check if the mouse clicked the button
+                                    if (button.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
+                                    {
+                                        std::cout << "Button clicked!" << std::endl;
+                                        showMenu = true; // Activate the menu
+                                    }
+                                }
+                            }
+                            if (showMenu)
+                            {
+                                // Draw the menu options
+                                sf::RectangleShape option1(sf::Vector2f(32, 32));
+                                option1.setFillColor(sf::Color(255,255,255));
+                                option1.setPosition(300, 350);
+
+                                sf::Text optionText1("Option 1", font, 24);
+                                optionText1.setPosition(option1.getPosition().x + 50, option1.getPosition().y + 10);
+
+                                sf::RectangleShape option2(sf::Vector2f(32, 32));
+                                option2.setFillColor(sf::Color(255,255,255));
+                                option2.setPosition(300, 425);
+
+                                sf::Text optionText2("Option 2", font, 24);
+                                optionText2.setPosition(option2.getPosition().x+ 50, option1.getPosition().y + 10);
+                            };
+
+
+                            // end of attempt
 
                             monkey1.set(30,50); // <---sets enemy--|
                             

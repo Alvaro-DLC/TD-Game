@@ -7,13 +7,16 @@
 
 using namespace std;
 
-void updateView(sf::RenderWindow& window, sf::View& view);
-
 int main()
 {
     sf::RenderWindow menu_window(sf::VideoMode(600, 600), "Menu");
     sf::RenderWindow instruct_win, gameWin;
-    sf::Texture backgroundTexture;
+    sf::Texture background;
+    if (!background.loadFromFile("Map-2.png"))
+    {
+        // error
+    }
+    sf::Sprite backgroundSprite(background);
     MainMenu m;
     Towers monkey1;
     MainPlayer mPlayer;
@@ -60,8 +63,8 @@ int main()
 
                         while(gameWin.isOpen())
                         {
-                            gameWin.clear(sf::Color(255.f, 255.f, 255.f));
-                            gameWin.draw(mPlayer.getPlayer());
+                            gameWin.clear();
+                            gameWin.draw(backgroundSprite);
                             gameWin.draw(myClass[0].getEnemy());
                             gameWin.draw(monkey1.getTower());
                             gameWin.display();
@@ -84,19 +87,11 @@ int main()
 
                                 if(sf::Event::Closed == evGame.type && gameWin.hasFocus())
                                 {
-                                    mPlayer.reset();
+                                    
                                     myClass[0].reset();
                                     myClass[0].resetTurn();
                                     gameWin.close();
                 
-                                }
-                                
-                                else if(sf::Event::MouseButtonReleased == evGame.type && gameWin.hasFocus())
-                                {
-                                    mPlayer.walk();
-                                    gameWin.clear(sf::Color(255.f, 255.f, 255.f));
-                                    gameWin.draw(mPlayer.getPlayer());
-                                    gameWin.display();
                                 }
                                 
                             }
@@ -129,10 +124,4 @@ int main()
     }
 
     return 0;
-}
-
-void updateView(sf::RenderWindow& window, sf::View& view)
-{
-    float aspectRatio = static_cast<float>(window.getSize().x) / window.getSize().y;
-    view.setSize(320 * aspectRatio, 320);
 }

@@ -10,18 +10,16 @@ class EnemyMobs
     public:
     EnemyMobs()
     {
-            i =0;
-
-            if (!enemyText[0].loadFromFile("blue_enemy.png"))
-            {
-                    // error...
-            }
-            if (!enemyText[1].loadFromFile("orange_enemy.png"))
-            {
-                    // error...
-            }
-            enemy.setTexture(enemyText[0]);
+        if (!enemyText[0].loadFromFile("blue_enemy.png"))
+        {
+                // error...
         }
+        if (!enemyText[1].loadFromFile("orange_enemy.png"))
+        {
+                // error...
+        }
+        enemy.setTexture(enemyText[0]);
+    }
     
     sf::Sprite& getEnemy(){return enemy;}
 
@@ -29,7 +27,7 @@ class EnemyMobs
     {
         if(timer.getElapsedTime().asMilliseconds() >= 100)
         {
-            if (turn > 40 && turn <= 120)
+            if (turn > 40 && turn <= 60)
             {
                 enemy.move(sf::Vector2f(0.f, 4.f));
                 turn++;
@@ -51,16 +49,16 @@ class EnemyMobs
 
     int getTurn()const {return turn;}
 
-    void reset()
+    void reset(float x,float y)
         {
-            enemy.setPosition(sf::Vector2f(0.f, 0.f));
+            enemy.setPosition(sf::Vector2f(y, x));
         }
     
     private:
         sf::Clock timer;
         sf::Sprite enemy;
-        sf::Texture enemyText[2];
-        int i, turn = 0;
+        sf::Texture enemyText[1];
+        int turn = 0;
 
 };
 

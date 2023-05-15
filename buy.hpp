@@ -9,7 +9,7 @@ class Buy
     public:
         Buy()
         {
-            buyBtn = sf::RectangleShape(sf::Vector2f(32.f, 32.f));
+            sf::RectangleShape buyBtn(sf::Vector2f(32.f, 32.f));
             buyBtn.setFillColor(sf::Color(255,255,255));
            //if
             if(!img3.loadFromFile("buyBtn.png"))

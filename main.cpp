@@ -75,7 +75,7 @@ int main()
                                 if (event.mouseButton.button == sf::Mouse::Left)
                                 {
                                     // Check if the mouse clicked the button
-                                    if (btn.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
+                                    if (gameWin.hasFocus() && btn.pressedBuy(sf::Mouse::getPosition(gameWin).x,sf::Mouse::getPosition(gameWin).y ))
                                     {
                                         std::cout << "Button clicked!" << std::endl;
                                         showM = true; // Activate the menu

@@ -19,7 +19,6 @@ int main()
         // error
     }
     sf::Sprite backgroundSprite(background);
-    sf::Sprite backgroundSprite(backgroundSprite);
     MainMenu m;
     //button
     //Buy tn;

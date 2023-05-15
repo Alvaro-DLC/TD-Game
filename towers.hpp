@@ -12,24 +12,16 @@ class Towers
     {
             i =0;
 
-            if (!towerText[0].loadFromFile("monkey.png"))
+            if (!towerText.loadFromFile("monkey.png"))
             {
                     // error...
             }
-            tower.setTexture(towerText[0]);
+            tower.setTexture(towerText);
         }
     
     sf::Sprite& getTower(){return tower;}
 
-    // void move()
-    // {
-    //     turn = 0
-    //     if(timer.getElapsedTime().asMilliseconds() >= 100)
-    //     {
-    //         enemy.move(sf::Vector2f(5.f, 0.f));
-    //         timer.restart();
-    //     }
-    // }
+   
 
     void set(float x,float y)                                                                                  
         {
@@ -39,7 +31,7 @@ class Towers
     private:
         sf::Clock timer;
         sf::Sprite tower;
-        sf::Texture towerText[2];
+        sf::Texture towerText;
         int i, turn;
 
 };

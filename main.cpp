@@ -14,6 +14,7 @@ int main()
     sf::RenderWindow menu_window(sf::VideoMode(600, 600), "Menu");
     sf::RenderWindow instruct_win, gameWin;
     sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite(backgroundSprite);
     MainMenu m;
     Towers monkey1;
     EnemyMobs enemy1;
@@ -60,15 +61,16 @@ int main()
 
                         while(gameWin.isOpen())
                         {
-                            gameWin.clear(sf::Color(255.f, 255.f, 255.f));
+                            gameWin.draw(backgroundSprite);
+                            // gameWin.clear(sf::Color(255.f, 255.f, 255.f));
                             gameWin.draw(myClass[0].getEnemy());
                             gameWin.draw(monkey1.getTower());
-                            gameWin.display();
+                            
                             // attempting buttonbelow
                             gameWin.draw(btn.getBuyBtn());
                             btn.set(30,50);
-                            gameWin.draw(btn.getBuyBtn());
-                             btn.set(30,50);
+                            gameWin.display();
+                            
                             bool showM = false;
                             if (event.type == sf::Event::MouseButtonPressed)
                             {
@@ -84,7 +86,8 @@ int main()
                                 };
                             };
                             gameWin.clear();
-                            gameWin.draw(btn);
+                            gameWin.draw(btn.getBuyBtn());
+                            btn.set(30,50);
                             
                             if (showM)
                             {
@@ -108,14 +111,14 @@ int main()
 
                             // end of attempt
                              
-                            // monkey1.set(30,50); // <---sets enemy--|
+                            monkey1.set(30,50); // <---sets enemy--|
                             
                             // <---moves enemy till it reaches the goal--->
                             if (myClass[0].getTurn() > 60)
                                 {
                                     int ox = 0;
                                 }
-                                else{
+                            else{
                                     myClass[0].move();
                                 }
                             // <------------------------------------------>

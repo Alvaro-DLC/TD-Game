@@ -77,11 +77,14 @@ int main()
                                     // Check if the mouse clicked the button
                                     if (gameWin.hasFocus() && btn.pressedBuy(sf::Mouse::getPosition(gameWin).x,sf::Mouse::getPosition(gameWin).y ))
                                     {
-                                        std::cout << "Button clicked!" << std::endl;
+                                        std::cout << "Button clicked! loser" << std::endl;
                                         showM = true; // Activate the menu
+                                        
                                     };
                                 };
                             };
+                            gameWin.clear();
+                            gameWin.draw(btn);
                             
                             if (showM)
                             {
@@ -118,28 +121,28 @@ int main()
                             // <------------------------------------------>
 
                             sf::Event evGame;
-                        //     while(gameWin.pollEvent(evGame))
-                        //     {
+                            while(gameWin.pollEvent(evGame))
+                            {
 
-                        //         if(sf::Event::Closed == evGame.type && gameWin.hasFocus())
-                        //         {
-                        //             mPlayer.reset();
-                        //             myClass[0].reset();
-                        //             myClass[0].resetTurn();
-                        //             gameWin.close();
+                                if(sf::Event::Closed == evGame.type && gameWin.hasFocus())
+                                {
+                                    // mPlayer.reset();
+                                    // myClass[0].reset();
+                                    // myClass[0].resetTurn();
+                                    gameWin.close();
                 
-                        //         }
+                                }
                                 
-                        //         else if(sf::Event::MouseButtonReleased == evGame.type && gameWin.hasFocus())
-                        //         {
-                        //             mPlayer.walk();
-                        //             gameWin.clear(sf::Color(255.f, 255.f, 255.f));
-                        //             gameWin.draw(mPlayer.getPlayer());
-                        //             gameWin.display();
-                        //         }
+                                else if(sf::Event::MouseButtonReleased == evGame.type && gameWin.hasFocus())
+                                {
+                                    // mPlayer.walk();
+                                    gameWin.clear(sf::Color(255.f, 255.f, 255.f));
+                                    // gameWin.draw(mPlayer.getPlayer());
+                                    gameWin.display();
+                                }
                                 
-                        //     }
-                        // }
+                            }
+                        }
                     }
                     if(menu_window.hasFocus() && m.pressedInstructions(sf::Mouse::getPosition(menu_window).x,sf::Mouse::getPosition(menu_window).y ))
                     {
@@ -169,7 +172,7 @@ int main()
 
     return 0;
     };
-};
+
 void updateView(sf::RenderWindow& window, sf::View& view)
 {
     float aspectRatio = static_cast<float>(window.getSize().x) / window.getSize().y;

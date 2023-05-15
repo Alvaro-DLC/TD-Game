@@ -1,6 +1,5 @@
 #include <iostream>
 #include "menu.hpp"
-#include "mainChar.hpp"
 #include "towers.hpp"
 #include "enemy_mobs.hpp"
 #include "buy.hpp"
@@ -17,7 +16,6 @@ int main()
     sf::Texture backgroundTexture;
     MainMenu m;
     Towers monkey1;
-    MainPlayer mPlayer;
     EnemyMobs enemy1;
     Buy btn;
     vector<EnemyMobs> myClass;
@@ -63,13 +61,12 @@ int main()
                         while(gameWin.isOpen())
                         {
                             gameWin.clear(sf::Color(255.f, 255.f, 255.f));
-                            gameWin.draw(mPlayer.getPlayer());
                             gameWin.draw(myClass[0].getEnemy());
                             gameWin.draw(monkey1.getTower());
                             gameWin.display();
                             // attempting buttonbelow
-                            gamewin.draw(btn.getBuy());
-                            btn.set(30,50);
+                            gamewin.draw(btn.getBuyBtn());
+                             btn.set(30,50);
                             bool showM = false
                             if (event.type == sf::Event::MouseButtonPressed)
                             {
@@ -80,11 +77,12 @@ int main()
                                     {
                                         std::cout << "Button clicked!" << std::endl;
                                         showMenu = true; // Activate the menu
-                                    }
-                                }
-                            }
-                            if (showMenu)
+                                    };
+                                };
+                            };
+                            if (showM)
                             {
+
                                 // Draw the menu options
                                 sf::RectangleShape option1(sf::Vector2f(32, 32));
                                 option1.setFillColor(sf::Color(255,255,255));
@@ -103,8 +101,9 @@ int main()
 
 
                             // end of attempt
-
-                            monkey1.set(30,50); // <---sets enemy--|
+                             gamewin.draw(btn.getBuyBtn());
+                             btn.set(30,50);
+                            // monkey1.set(30,50); // <---sets enemy--|
                             
                             // <---moves enemy till it reaches the goal--->
                             if (myClass[0].getTurn() > 60)
@@ -117,28 +116,28 @@ int main()
                             // <------------------------------------------>
 
                             sf::Event evGame;
-                            while(gameWin.pollEvent(evGame))
-                            {
+                        //     while(gameWin.pollEvent(evGame))
+                        //     {
 
-                                if(sf::Event::Closed == evGame.type && gameWin.hasFocus())
-                                {
-                                    mPlayer.reset();
-                                    myClass[0].reset();
-                                    myClass[0].resetTurn();
-                                    gameWin.close();
+                        //         if(sf::Event::Closed == evGame.type && gameWin.hasFocus())
+                        //         {
+                        //             mPlayer.reset();
+                        //             myClass[0].reset();
+                        //             myClass[0].resetTurn();
+                        //             gameWin.close();
                 
-                                }
+                        //         }
                                 
-                                else if(sf::Event::MouseButtonReleased == evGame.type && gameWin.hasFocus())
-                                {
-                                    mPlayer.walk();
-                                    gameWin.clear(sf::Color(255.f, 255.f, 255.f));
-                                    gameWin.draw(mPlayer.getPlayer());
-                                    gameWin.display();
-                                }
+                        //         else if(sf::Event::MouseButtonReleased == evGame.type && gameWin.hasFocus())
+                        //         {
+                        //             mPlayer.walk();
+                        //             gameWin.clear(sf::Color(255.f, 255.f, 255.f));
+                        //             gameWin.draw(mPlayer.getPlayer());
+                        //             gameWin.display();
+                        //         }
                                 
-                            }
-                        }
+                        //     }
+                        // }
                     }
                     if(menu_window.hasFocus() && m.pressedInstructions(sf::Mouse::getPosition(menu_window).x,sf::Mouse::getPosition(menu_window).y ))
                     {
@@ -173,4 +172,4 @@ void updateView(sf::RenderWindow& window, sf::View& view)
 {
     float aspectRatio = static_cast<float>(window.getSize().x) / window.getSize().y;
     view.setSize(320 * aspectRatio, 320);
-}
+};

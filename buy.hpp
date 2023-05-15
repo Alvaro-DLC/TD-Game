@@ -18,14 +18,19 @@ class Buy
 
             }
 
-            playBtn.setTexture(&img3);
-            playBtn.setPosition(50.f, 10.f);
+            // playBtn.setTexture(&img3);
+            // playBtn.setPosition(50.f, 10.f);
 
 
         }
         bool pressedBuy(float x, float y){
             if(x > 50.f && x <= 250.f && y >= 10.f && y <= 110.f) return true; else return false;}
 
+          void set(float x,float y)                                                                                  
+        {
+            buyBtn.setPosition(sf::Vector2f(y, x));
+        }
+    
         sf::RectangleShape& getBuyBtn() {return buyBtn;}
 
 

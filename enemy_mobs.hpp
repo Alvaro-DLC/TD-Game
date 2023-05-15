@@ -10,26 +10,42 @@ class EnemyMobs
     public:
     EnemyMobs()
     {
-            i =0;
-
-            if (!enemyText[0].loadFromFile("blue_enemy.png"))
-            {
-                    // error...
-            }
-            if (!enemyText[1].loadFromFile("orange_enemy.png"))
-            {
-                    // error...
-            }
-            enemy.setTexture(enemyText[0]);
+        if (!enemyText[0].loadFromFile("blue_enemy.png"))
+        {
+                // error...
         }
+        if (!enemyText[1].loadFromFile("orange_enemy.png"))
+        {
+                // error...
+        }
+        enemy.setTexture(enemyText[0]);
+    }
     
     sf::Sprite& getEnemy(){return enemy;}
+    
+    void setMoving(bool moving) {this->moving = moving;}
+
+    int getTurn()const {return turn;}
+    int getMoving()const {return turn;}
+
+    void resetTurn() {turn = 0;}
+    void reset(float x,float y) {enemy.setPosition(sf::Vector2f(y, x));}
 
     void move()
     {
         if(timer.getElapsedTime().asMilliseconds() >= 100)
         {
-            if (turn > 40 && turn <= 120)
+            if(turn > 75)
+            {
+                enemy.move(sf::Vector2f(0.f, 4.f));
+                turn++;
+            }
+            else if(turn > 50 && turn <= 75)
+            {
+                enemy.move(sf::Vector2f(-4.f, 0.f));
+                turn++;
+            }
+            else if (turn > 30 && turn <= 50)
             {
                 enemy.move(sf::Vector2f(0.f, 4.f));
                 turn++;
@@ -39,28 +55,21 @@ class EnemyMobs
                 enemy.move(sf::Vector2f(4.f, 0.f));
                 turn++;
             }
-
             timer.restart();
         }
     }
 
-    void resetTurn()
-    {
-        turn = 0;
-    }
-
-    int getTurn()const {return turn;}
-
-    void reset()
+    void set(float x,float y)                                                                                  
         {
-            enemy.setPosition(sf::Vector2f(0.f, 0.f));
+            enemy.setPosition(sf::Vector2f(y, x));
         }
     
     private:
         sf::Clock timer;
         sf::Sprite enemy;
-        sf::Texture enemyText[2];
-        int i, turn = 0;
+        sf::Texture enemyText[1];
+        int turn = 0;
+        bool moving = false;
 
 };
 

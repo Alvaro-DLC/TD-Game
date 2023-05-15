@@ -13,14 +13,30 @@ int main()
 {
     sf::RenderWindow menu_window(sf::VideoMode(600, 600), "Menu");
     sf::RenderWindow instruct_win, gameWin;
-    sf::Texture backgroundTexture;
+    sf::Texture background;
+    if (!background.loadFromFile("Map-2.png"))
+    {
+        // error
+    }
+    sf::Sprite backgroundSprite(background);
     sf::Sprite backgroundSprite(backgroundSprite);
     MainMenu m;
+    //button
+    //Buy tn;
+    // Timer
+    sf::Clock enemy_timer, enemy_move_timer;
+    //Towers 
     Towers monkey1;
-    EnemyMobs enemy1;
-    Buy btn;
-    vector<EnemyMobs> myClass;
-    myClass.push_back(enemy1);
+    // Enemies 
+    int enemy_onscreen = -1;
+    EnemyMobs enemy;
+    vector<EnemyMobs> round1;
+    // <---adds enemy 10--->
+    for(int i = 0; i < 10; i++)
+    {
+        round1.push_back(enemy);
+    }
+    // <------------------->
 
 
     while (menu_window.isOpen())
@@ -44,6 +60,7 @@ int main()
                     if(menu_window.hasFocus() && m.pressedPlay(sf::Mouse::getPosition(menu_window).x,sf::Mouse::getPosition(menu_window).y ))
                     {
                         cout << "Clicked playBtn\n";
+
                         // <---Settting the window--->
                         gameWin.create(sf::VideoMode(960, 960, 32), "TD-Game");
                         const float aspectRatio = static_cast<float>(320) / 320;
@@ -61,11 +78,16 @@ int main()
 
                         while(gameWin.isOpen())
                         {
+                            gameWin.clear();
                             gameWin.draw(backgroundSprite);
-                            // gameWin.clear(sf::Color(255.f, 255.f, 255.f));
-                            gameWin.draw(myClass[0].getEnemy());
-                            gameWin.draw(monkey1.getTower());
-                            
+                            // gameWin.draw(monkey1.getTower());
+                            for(int i = 0; i < enemy_onscreen; i++)
+                            {
+                                gameWin.draw(round1[i].getEnemy());
+                            }
+                            gameWin.display();
+
+/*
                             // attempting buttonbelow
                             gameWin.draw(btn.getBuyBtn());
                             btn.set(30,50);
@@ -110,18 +132,35 @@ int main()
 
 
                             // end of attempt
+                            */
                              
                             monkey1.set(30,50); // <---sets enemy--|
                             
-                            // <---moves enemy till it reaches the goal--->
-                            if (myClass[0].getTurn() > 60)
+                            // <---Allows enemies to move--->
+                            if(enemy_timer.getElapsedTime().asSeconds() >= 2 && enemy_onscreen < 10)
+                            {
+                                enemy_onscreen++;
+                                round1[enemy_onscreen].setMoving(true);
+                                cout << "added enemy " << enemy_onscreen << endl;
+                                enemy_timer.restart();
+                            }
+                            // <---------------------------->
+
+                            // <---moves enemies--->
+                            if(enemy_move_timer.getElapsedTime().asMilliseconds() >= 100)
+                            {
+                                for(int x = 0; x < enemy_onscreen; x++)
                                 {
-                                    int ox = 0;
+                                    if (round1[x].getMoving() && round1[x].getTurn() < 250)
+                                        {
+                                            round1[x].move();
+                                            cout << "enemy " << x << " moved\n";
+                                        }
+                                        
                                 }
-                            else{
-                                    myClass[0].move();
-                                }
-                            // <------------------------------------------>
+                                enemy_move_timer.restart();
+                            }
+                            // <------------------->
 
                             sf::Event evGame;
                             while(gameWin.pollEvent(evGame))
@@ -129,9 +168,17 @@ int main()
 
                                 if(sf::Event::Closed == evGame.type && gameWin.hasFocus())
                                 {
-                                    // mPlayer.reset();
-                                    // myClass[0].reset();
-                                    // myClass[0].resetTurn();
+                                    // <---Resets the enemies--->
+                                    for(int y = 0; y < 10; y++)
+                                    {
+                                        round1[y].reset();
+                                        round1[y].resetTurn();
+                                        round1[y].setMoving(false);
+                                    }
+                                    enemy_timer.restart();
+                                    enemy_onscreen = -1;
+                                    enemy_move_timer.restart();
+                                    // <------------------------>
                                     gameWin.close();
                 
                                 }

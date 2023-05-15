@@ -1,6 +1,5 @@
 #include <iostream>
 #include "menu.hpp"
-#include "mainChar.hpp"
 #include "towers.hpp"
 #include "enemy_mobs.hpp"
 #include <SFML/Graphics.hpp>
@@ -19,10 +18,14 @@ int main()
     sf::Sprite backgroundSprite(background);
     MainMenu m;
     Towers monkey1;
-    MainPlayer mPlayer;
-    EnemyMobs enemy1;
-    vector<EnemyMobs> myClass;
-    myClass.push_back(enemy1);
+    EnemyMobs enemy;
+    vector<EnemyMobs> round1;
+    // <---adds enemy 10--->
+    for(int enemy_amount = 0; enemy_amount < 10; enemy_amount++)
+    {
+        round1.push_back(enemy);
+    }
+    // <------------------->
 
 
     while (menu_window.isOpen())
@@ -65,19 +68,21 @@ int main()
                         {
                             gameWin.clear();
                             gameWin.draw(backgroundSprite);
-                            gameWin.draw(myClass[0].getEnemy());
                             gameWin.draw(monkey1.getTower());
+                            for(int i = 0; i < 2; i++)
+                            {
+                                gameWin.draw(round1[i].getEnemy());
+                            }
                             gameWin.display();
-
-                            monkey1.set(30,50); // <---sets enemy--|
+                            monkey1.set(30,50); // <---sets tower--|
                             
                             // <---moves enemy till it reaches the goal--->
-                            if (myClass[0].getTurn() > 60)
+                            if (round1[0].getTurn() > 160)
                                 {
                                     int ox = 0;
                                 }
                                 else{
-                                    myClass[0].move();
+                                    round1[0].move();
                                 }
                             // <------------------------------------------>
 
@@ -88,8 +93,8 @@ int main()
                                 if(sf::Event::Closed == evGame.type && gameWin.hasFocus())
                                 {
                                     
-                                    myClass[0].reset();
-                                    myClass[0].resetTurn();
+                                    round1[0].reset(50,0);
+                                    round1[0].resetTurn();
                                     gameWin.close();
                 
                                 }

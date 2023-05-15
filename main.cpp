@@ -2,20 +2,18 @@
 #include "menu.hpp"
 #include "towers.hpp"
 #include "enemy_mobs.hpp"
+#include "buy.hpp"
 #include <SFML/Graphics.hpp>
 
 using namespace std;
+
+void updateView(sf::RenderWindow& window, sf::View& view);
 
 int main()
 {
     sf::RenderWindow menu_window(sf::VideoMode(600, 600), "Menu");
     sf::RenderWindow instruct_win, gameWin;
-    sf::Texture background;
-    if (!background.loadFromFile("Map-2.png"))
-    {
-        // error
-    }
-    sf::Sprite backgroundSprite(background);
+    sf::Texture backgroundTexture;
     MainMenu m;
     // Timer
     sf::Clock enemy_timer, enemy_move_timer;
@@ -72,15 +70,59 @@ int main()
 
                         while(gameWin.isOpen())
                         {
-                            gameWin.clear();
-                            gameWin.draw(backgroundSprite);
+                            gameWin.clear(sf::Color(255.f, 255.f, 255.f));
+                            gameWin.draw(myClass[0].getEnemy());
                             gameWin.draw(monkey1.getTower());
                             for(int i = 0; i < enemy_onscreen; i++)
                             {
                                 gameWin.draw(round1[i].getEnemy());
                             }
                             gameWin.display();
-                            monkey1.set(30,50); // <---sets tower--|
+                            // attempting buttonbelow
+                            gameWin.draw(btn.getBuyBtn());
+                            btn.set(30,50);
+                            gameWin.draw(btn.getBuyBtn());
+                             btn.set(30,50);
+                            bool showM = false;
+                            if (event.type == sf::Event::MouseButtonPressed)
+                            {
+                                if (event.mouseButton.button == sf::Mouse::Left)
+                                {
+                                    // Check if the mouse clicked the button
+                                    if (gameWin.hasFocus() && btn.pressedBuy(sf::Mouse::getPosition(gameWin).x,sf::Mouse::getPosition(gameWin).y ))
+                                    {
+                                        std::cout << "Button clicked! loser" << std::endl;
+                                        showM = true; // Activate the menu
+                                        
+                                    };
+                                };
+                            };
+                            gameWin.clear();
+                            gameWin.draw(btn);
+                            
+                            if (showM)
+                            {
+                                sf::Font font;
+                                // Draw the menu options
+                                sf::RectangleShape option1(sf::Vector2f(32, 32));
+                                option1.setFillColor(sf::Color(255,255,255));
+                                option1.setPosition(300, 350);
+
+                                sf::Text optionText1("Option 1", font, 24);
+                                optionText1.setPosition(option1.getPosition().x + 50, option1.getPosition().y + 10);
+
+                                sf::RectangleShape option2(sf::Vector2f(32, 32));
+                                option2.setFillColor(sf::Color(255,255,255));
+                                option2.setPosition(300, 425);
+
+                                sf::Text optionText2("Option 2", font, 24);
+                                optionText2.setPosition(option2.getPosition().x+ 50, option1.getPosition().y + 10);
+                            };
+
+
+                            // end of attempt
+                             
+                            // monkey1.set(30,50); // <---sets enemy--|
                             
                             // <---Allows enemies to move--->
                             if(enemy_timer.getElapsedTime().asSeconds() >= 2 && enemy_onscreen < 10)
@@ -129,6 +171,14 @@ int main()
                 
                                 }
                                 
+                                else if(sf::Event::MouseButtonReleased == evGame.type && gameWin.hasFocus())
+                                {
+                                    // mPlayer.walk();
+                                    gameWin.clear(sf::Color(255.f, 255.f, 255.f));
+                                    // gameWin.draw(mPlayer.getPlayer());
+                                    gameWin.display();
+                                }
+                                
                             }
                         }
                     }
@@ -159,4 +209,10 @@ int main()
     }
 
     return 0;
-}
+    };
+
+void updateView(sf::RenderWindow& window, sf::View& view)
+{
+    float aspectRatio = static_cast<float>(window.getSize().x) / window.getSize().y;
+    view.setSize(320 * aspectRatio, 320);
+};

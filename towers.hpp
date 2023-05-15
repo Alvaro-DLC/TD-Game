@@ -19,7 +19,7 @@ class Towers
             tower.setTexture(towerText[0]);
         }
     
-    sf::Sprite& getTower() {return tower;}
+    sf::Sprite& getTower(){return tower;}
 
     // void move()
     // {

@@ -7,8 +7,6 @@
 
 using namespace std;
 
-void updateView(sf::RenderWindow& window, sf::View& view);
-
 int main()
 {
     sf::RenderWindow menu_window(sf::VideoMode(600, 600), "Menu");
@@ -19,10 +17,9 @@ int main()
         // error
     }
     sf::Sprite backgroundSprite(background);
-    sf::Sprite backgroundSprite(backgroundSprite);
     MainMenu m;
     //button
-    //Buy tn;
+    Buy btn;
     // Timer
     sf::Clock enemy_timer, enemy_move_timer;
     //Towers 
@@ -87,11 +84,11 @@ int main()
                             }
                             gameWin.display();
 
-/*
+
                             // attempting buttonbelow
                             gameWin.draw(btn.getBuyBtn());
                             btn.set(30,50);
-                            gameWin.display();
+                            
                             
                             bool showM = false;
                             if (event.type == sf::Event::MouseButtonPressed)
@@ -132,7 +129,7 @@ int main()
 
 
                             // end of attempt
-                            */
+                        
                              
                             monkey1.set(30,50); // <---sets enemy--|
                             
@@ -162,7 +159,8 @@ int main()
                             }
                             // <------------------->
 
-                            sf::Event evGame;
+                            // <---Events--->
+                            sf::Event evGame; 
                             while(gameWin.pollEvent(evGame))
                             {
 
@@ -192,6 +190,7 @@ int main()
                                 }
                                 
                             }
+                            // <-------->
                         }
                     }
                     if(menu_window.hasFocus() && m.pressedInstructions(sf::Mouse::getPosition(menu_window).x,sf::Mouse::getPosition(menu_window).y ))
@@ -222,9 +221,3 @@ int main()
 
     return 0;
     };
-
-void updateView(sf::RenderWindow& window, sf::View& view)
-{
-    float aspectRatio = static_cast<float>(window.getSize().x) / window.getSize().y;
-    view.setSize(320 * aspectRatio, 320);
-};

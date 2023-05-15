@@ -13,8 +13,15 @@ int main()
 {
     sf::RenderWindow menu_window(sf::VideoMode(600, 600), "Menu");
     sf::RenderWindow instruct_win, gameWin;
-    sf::Texture backgroundTexture;
+    sf::Texture background;
+    if (!background.loadFromFile("Map-2.png"))
+    {
+        // error
+    }
+    sf::Sprite backgroundSprite(background);
     MainMenu m;
+    //button
+    //Buy tn;
     // Timer
     sf::Clock enemy_timer, enemy_move_timer;
     //Towers 
@@ -70,14 +77,16 @@ int main()
 
                         while(gameWin.isOpen())
                         {
-                            gameWin.clear(sf::Color(255.f, 255.f, 255.f));
-                            gameWin.draw(myClass[0].getEnemy());
-                            gameWin.draw(monkey1.getTower());
+                            gameWin.clear();
+                            gameWin.draw(backgroundSprite);
+                            // gameWin.draw(monkey1.getTower());
                             for(int i = 0; i < enemy_onscreen; i++)
                             {
                                 gameWin.draw(round1[i].getEnemy());
                             }
                             gameWin.display();
+
+/*
                             // attempting buttonbelow
                             gameWin.draw(btn.getBuyBtn());
                             btn.set(30,50);
@@ -121,6 +130,7 @@ int main()
 
 
                             // end of attempt
+                            */
                              
                             // monkey1.set(30,50); // <---sets enemy--|
                             

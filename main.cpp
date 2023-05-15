@@ -65,24 +65,27 @@ int main()
                             gameWin.draw(monkey1.getTower());
                             gameWin.display();
                             // attempting buttonbelow
-                            gamewin.draw(btn.getBuyBtn());
+                            gameWin.draw(btn.getBuyBtn());
+                            btn.set(30,50);
+                            gameWin.draw(btn.getBuyBtn());
                              btn.set(30,50);
-                            bool showM = false
+                            bool showM = false;
                             if (event.type == sf::Event::MouseButtonPressed)
                             {
                                 if (event.mouseButton.button == sf::Mouse::Left)
                                 {
                                     // Check if the mouse clicked the button
-                                    if (button.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
+                                    if (btn.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
                                     {
                                         std::cout << "Button clicked!" << std::endl;
-                                        showMenu = true; // Activate the menu
+                                        showM = true; // Activate the menu
                                     };
                                 };
                             };
+                            
                             if (showM)
                             {
-
+                                sf::Font font;
                                 // Draw the menu options
                                 sf::RectangleShape option1(sf::Vector2f(32, 32));
                                 option1.setFillColor(sf::Color(255,255,255));
@@ -101,8 +104,7 @@ int main()
 
 
                             // end of attempt
-                             gamewin.draw(btn.getBuyBtn());
-                             btn.set(30,50);
+                             
                             // monkey1.set(30,50); // <---sets enemy--|
                             
                             // <---moves enemy till it reaches the goal--->
@@ -166,8 +168,8 @@ int main()
     }
 
     return 0;
-}
-
+    };
+};
 void updateView(sf::RenderWindow& window, sf::View& view)
 {
     float aspectRatio = static_cast<float>(window.getSize().x) / window.getSize().y;

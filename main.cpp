@@ -95,7 +95,9 @@ int main()
                             // monkey1.set(50,100);
                             gameWin.draw(btn.getBuyBtn());
                             btn.set(34,122);
+                            gameWin.draw(player.getDigitalCurrency());
                             gameWin.display();
+                            
                             // <---Allows enemies to move--->
                             if(enemy_timer.getElapsedTime().asSeconds() >= 2 && enemy_onscreen < 10)
                             {

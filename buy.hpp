@@ -19,9 +19,9 @@ class Buy
             // buyBtn.setTexture(&buyText);
             // buyBtn.setPosition(50.f, 120.f);
             
-            sf::RectangleShape buyBtn(sf::Vector2f(200.f, 100.f));
-            buyBtn.setPosition(50.f, 120.f);
-            buyBtn.setTexture(&img2);
+            sf::RectangleShape buyB(sf::Vector2f(200.f, 100.f));
+            buyB.setPosition(50.f, 120.f);
+            buyB.setTexture(&img2);
             
 
         }
@@ -33,15 +33,15 @@ class Buy
 
           void set(float x,float y)                                                                                  
         {
-            buyBtn.setPosition(sf::Vector2f(y, x));
+            buyB.setPosition(sf::Vector2f(y, x));
         }
     
-        sf::RectangleShape& getBuyBtn() {return buyBtn;}
+        sf::RectangleShape& getBuyB() {return buyB;}
         // sf::Sprite& getBuyBtn(){return buyBtn;}
         
 
     private:
-        sf::RectangleShape buyBtn;
+        sf::RectangleShape buyB;
         // sf::Sprite buyBtn;
         sf::Texture img2;
 };

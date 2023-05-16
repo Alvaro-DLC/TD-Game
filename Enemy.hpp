@@ -53,7 +53,7 @@ class Enemy
     }
     void move()
     {
-            if(turn > 150 && turn <= 250)
+            if(turn > 150 && turn <= 240)
             {
                 // <---rotate--->
                 enemy.setTexture(enemyText[3]);

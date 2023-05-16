@@ -1,5 +1,6 @@
 #include <iostream>
 #include "menu.hpp"
+#include "Player.hpp"
 #include "towers.hpp"
 #include "Enemy.hpp"
 #include "buy.hpp"
@@ -18,6 +19,8 @@ int main()
     }
     sf::Sprite backgroundSprite(background);
     MainMenu m;
+    // Player
+    Player player;
     //button
     Buy btn;
     // Timer
@@ -77,6 +80,7 @@ int main()
                         {
                             gameWin.clear();
                             gameWin.draw(backgroundSprite);
+                            gameWin.draw(player.getHeathBar());
                             // gameWin.draw(monkey1.getTower());
                             for(int i = 0; i < enemy_onscreen; i++)
                             {

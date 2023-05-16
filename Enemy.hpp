@@ -11,7 +11,7 @@ class Enemy
     // constructors
     Enemy(int color = 0)
     {
-        
+
         if (!enemyText[0].loadFromFile("orange_enemy.png"))
         {
                 // error...
@@ -46,7 +46,11 @@ class Enemy
     // member functions
     void take_damage(int damage) {health -= damage;}
     void resetTurn() {turn = 0;}
-    void reset() {enemy.setPosition(sf::Vector2f(0.f, 50.f));}
+    void reset() 
+    {
+        enemy.setPosition(sf::Vector2f(0.f, 50.f));
+        enemy.setTexture(enemyText[0]);
+    }
     void move()
     {
             if(turn > 150 && turn <= 250)

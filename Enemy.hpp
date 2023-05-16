@@ -9,13 +9,22 @@ class Enemy
 {
     public:
     // constructors
-    Enemy(int color)
+    Enemy(int color = 0)
     {
+
         if (!enemyText[0].loadFromFile("orange_enemy.png"))
         {
                 // error...
         }
-        if (!enemyText[1].loadFromFile("blue_enemy.png"))
+        if (!enemyText[1].loadFromFile("orange_enemy_down.png"))
+        {
+                // error...
+        }
+        if (!enemyText[2].loadFromFile("orange_enemy_left.png"))
+        {
+                // error...
+        }
+        if (!enemyText[3].loadFromFile("orange_enemy_up.png"))
         {
                 // error...
         }
@@ -37,16 +46,17 @@ class Enemy
     // member functions
     void take_damage(int damage) {health -= damage;}
     void resetTurn() {turn = 0;}
-    void reset() {enemy.setPosition(sf::Vector2f(0.f, 50.f));}
+    void reset() 
+    {
+        enemy.setPosition(sf::Vector2f(0.f, 50.f));
+        enemy.setTexture(enemyText[0]);
+    }
     void move()
     {
-            if(turn > 150 && turn <= 250)
+            if(turn > 150 && turn <= 240)
             {
                 // <---rotate--->
-                // if (turn = 151)
-                // {
-                //     enemy.setRotation(enemy.getRotation() + 1.f);
-                // }
+                enemy.setTexture(enemyText[3]);
                 // <------------>
                 enemy.move(sf::Vector2f(0.f, -4.f));
                 turn++;
@@ -54,10 +64,7 @@ class Enemy
             else if(turn > 97 && turn <= 150)
             {
                 // <---rotate--->
-                // if (turn = 98)
-                // {
-                //     enemy.setRotation(enemy.getRotation() + 1.f);
-                // }
+                enemy.setTexture(enemyText[0]);
                 // <------------>
                 enemy.move(sf::Vector2f(4.f, 0.f));
                 turn++;
@@ -65,10 +72,7 @@ class Enemy
             else if(turn > 75 && turn <= 97)
             {
                 // <---rotate--->
-                // if (turn = 76)
-                // {
-                //     enemy.setRotation(enemy.getRotation() + 1.f);
-                // }
+                enemy.setTexture(enemyText[1]);
                 // <------------>
                 enemy.move(sf::Vector2f(0.f, 4.f));
                 turn++;
@@ -76,10 +80,7 @@ class Enemy
             else if(turn > 51 && turn <= 75)
             {
                 // <---rotate--->
-                // if (turn = 52)
-                // {
-                //     enemy.setRotation(enemy.getRotation() + 1.f);
-                // }
+                enemy.setTexture(enemyText[2]);                
                 // <------------>
                 enemy.move(sf::Vector2f(-4.f, 0.f));
                 turn++;
@@ -87,10 +88,7 @@ class Enemy
             else if (turn > 29 && turn <= 51)
             {
                 // <---rotate--->
-                // if (turn = 30)
-                // {
-                //     enemy.setRotation(enemy.getRotation() + 1.f);
-                // }
+                enemy.setTexture(enemyText[1]);         
                 // <------------>
                 enemy.move(sf::Vector2f(0.f, 4.f));
                 turn++;
@@ -104,7 +102,7 @@ class Enemy
 
     private:
         sf::Sprite enemy;
-        sf::Texture enemyText[1];
+        sf::Texture enemyText[4];
         int turn = 0,health = 5, damage = 1;
         bool moving = false;
 

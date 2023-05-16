@@ -1,5 +1,6 @@
 #include <iostream>
 #include "menu.hpp"
+#include "Player.hpp"
 #include "towers.hpp"
 #include "Enemy.hpp"
 #include "buy.hpp"
@@ -10,7 +11,7 @@ using namespace std;
 int main()
 {
     sf::RenderWindow menu_window(sf::VideoMode(600, 600), "Menu");
-    sf::RenderWindow instruct_win, gameWin;
+    sf::RenderWindow instruct_win, gameWin,buyWin;
     sf::Texture background;
     if (!background.loadFromFile("Map-2.png"))
     {
@@ -18,6 +19,8 @@ int main()
     }
     sf::Sprite backgroundSprite(background);
     MainMenu m;
+    // Player
+    Player player;
     //button
     Buy btn;
     // Timer
@@ -26,7 +29,7 @@ int main()
     Towers monkey1;
     // Enemies 
     int enemy_onscreen = -1;
-    Enemy enemy;
+    Enemy enemy(0);
     vector<Enemy> round1;
     // <---adds enemy 10--->
     for(int i = 0; i < 10; i++)
@@ -39,9 +42,8 @@ int main()
     while (menu_window.isOpen())
     {
         menu_window.clear();
-        menu_window.draw((m.getPlayBtn()));
         menu_window.draw((m.getInstructionsBtn()));
-        menu_window.display();
+        // menu_window.display();
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
 
@@ -77,60 +79,42 @@ int main()
                         {
                             gameWin.clear();
                             gameWin.draw(backgroundSprite);
+                            gameWin.draw(player.getHeathBar());
                             // gameWin.draw(monkey1.getTower());
                             for(int i = 0; i < enemy_onscreen; i++)
                             {
                                 gameWin.draw(round1[i].getEnemy());
                             }
+                            
+
+
+                            
+                            
+                            // gameWin.draw(monkey1.getTower());
+                            // monkey1.set(50,100);
+                            gameWin.draw(btn.getBuyBtn());
+                            btn.set(34,122);
+                            gameWin.draw(player.getDigitalCurrency());
+                            gameWin.draw(monkey1.getTower());
+                            monkey1.set(50,100);
+                            // gameWin.draw(btn.getBuyB());
+                            // gameWin.draw((btn.getBuyB()));
+                            // gameWin.draw((m.getInstructionsBtn()));
+                            gameWin.draw((m.getBuyBt()));
+                            
                             gameWin.display();
-
-
-                            // attempting buttonbelow
-                            gameWin.draw(btn.getBuyBtn());
-                            btn.set(30,50);
                             
-                            
-                            bool showM = false;
-                            if (event.type == sf::Event::MouseButtonPressed)
+                            // <---Allows enemies to move--->
+                            if(enemy_timer.getElapsedTime().asSeconds() >= 2 && enemy_onscreen < 10)
                             {
-                                if (event.mouseButton.button == sf::Mouse::Left)
-                                {
-                                    // Check if the mouse clicked the button
-                                    if (gameWin.hasFocus() && btn.pressedBuy(sf::Mouse::getPosition(gameWin).x,sf::Mouse::getPosition(gameWin).y ))
-                                    {
-                                        std::cout << "Button clicked! loser" << std::endl;
-                                        showM = true; // Activate the menu
-                                        
-                                    };
-                                };
-                            };
-                            gameWin.clear();
-                            gameWin.draw(btn.getBuyBtn());
-                            btn.set(30,50);
+                                enemy_onscreen++;
+                                round1[enemy_onscreen].setMoving(true);
+                                cout << "added enemy " << enemy_onscreen << endl;
+                                enemy_timer.restart();
+                            }
+                            // <---------------------------->
                             
-                            if (showM)
-                            {
-                                sf::Font font;
-                                // Draw the menu options
-                                sf::RectangleShape option1(sf::Vector2f(32, 32));
-                                option1.setFillColor(sf::Color(255,255,255));
-                                option1.setPosition(300, 350);
-
-                                sf::Text optionText1("Option 1", font, 24);
-                                optionText1.setPosition(option1.getPosition().x + 50, option1.getPosition().y + 10);
-
-                                sf::RectangleShape option2(sf::Vector2f(32, 32));
-                                option2.setFillColor(sf::Color(255,255,255));
-                                option2.setPosition(300, 425);
-
-                                sf::Text optionText2("Option 2", font, 24);
-                                optionText2.setPosition(option2.getPosition().x+ 50, option1.getPosition().y + 10);
-                            };
-
-
-                            // end of attempt
-                        
-                             
+                            
                             monkey1.set(30,50); // <---sets enemy--|
                             
                             // <---Allows enemies to move--->
@@ -151,14 +135,31 @@ int main()
                                     if (round1[x].getMoving() && round1[x].getTurn() < 250)
                                         {
                                             round1[x].move();
-                                            cout << "enemy " << x << " moved\n";
+
+                                            // cout << "enemy " << x << " moved\n";
                                         }
                                         
                                 }
                                 enemy_move_timer.restart();
                             }
                             // <------------------->
+                            if(gameWin.hasFocus() && m.pressedBuyBt(sf::Mouse::getPosition(gameWin).x,sf::Mouse::getPosition(gameWin).y ))
+                            {
+                                cout << "Clicked buy\n";
+                                buyWin.create(sf::VideoMode(200,200),"BUY");
+                                while(buyWin.isOpen())
+                                {
+                                    sf::Event eBuy;
+                                    while(buyWin.pollEvent(eBuy))
+                                    {
+                                        if(sf::Event::Closed == eBuy.type && buyWin.hasFocus())
+                                        {
+                                            buyWin.close();
+                                        }
 
+                                    }
+                                }
+                            }
                             // <---Events--->
                             sf::Event evGame; 
                             while(gameWin.pollEvent(evGame))
@@ -179,14 +180,6 @@ int main()
                                     // <------------------------>
                                     gameWin.close();
                 
-                                }
-                                
-                                else if(sf::Event::MouseButtonReleased == evGame.type && gameWin.hasFocus())
-                                {
-                                    // mPlayer.walk();
-                                    gameWin.clear(sf::Color(255.f, 255.f, 255.f));
-                                    // gameWin.draw(mPlayer.getPlayer());
-                                    gameWin.display();
                                 }
                                 
                             }
@@ -210,14 +203,14 @@ int main()
                         }
                     }
                     break;
+                    
+                }
             }
             menu_window.clear();
             menu_window.draw((m.getPlayBtn()));
             menu_window.draw((m.getInstructionsBtn()));
             menu_window.display();
 
-        }
-    }
 
-    return 0;
-    };
+        }
+        }

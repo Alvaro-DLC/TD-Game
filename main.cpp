@@ -1,13 +1,11 @@
 #include <iostream>
 #include "menu.hpp"
 #include "towers.hpp"
-#include "enemy_mobs.hpp"
+#include "Enemy.hpp"
 #include "buy.hpp"
 #include <SFML/Graphics.hpp>
 
 using namespace std;
-
-void updateView(sf::RenderWindow& window, sf::View& view);
 
 int main()
 {
@@ -28,8 +26,8 @@ int main()
     Towers monkey1;
     // Enemies 
     int enemy_onscreen = -1;
-    EnemyMobs enemy;
-    vector<EnemyMobs> round1;
+    Enemy enemy;
+    vector<Enemy> round1;
     // <---adds enemy 10--->
     for(int i = 0; i < 10; i++)
     {
@@ -104,6 +102,8 @@ int main()
                             }
                             // <---------------------------->
                             // attempting buttonbelow
+                            // attempting buttonbelow
+                            
                             
                             
                             bool showM = false;
@@ -147,6 +147,20 @@ int main()
 
 
                             // end of attempt
+                        
+                             
+                            monkey1.set(30,50); // <---sets enemy--|
+                            
+                            // <---Allows enemies to move--->
+                            if(enemy_timer.getElapsedTime().asSeconds() >= 2 && enemy_onscreen < 10)
+                            {
+                                enemy_onscreen++;
+                                round1[enemy_onscreen].setMoving(true);
+                                cout << "added enemy " << enemy_onscreen << endl;
+                                enemy_timer.restart();
+                            }
+                            // <---------------------------->
+
                             // <---moves enemies--->
                             if(enemy_move_timer.getElapsedTime().asMilliseconds() >= 100)
                             {
@@ -164,7 +178,8 @@ int main()
                             }
                             // <------------------->
 
-                            sf::Event evGame;
+                            // <---Events--->
+                            sf::Event evGame; 
                             while(gameWin.pollEvent(evGame))
                             {
 
@@ -186,25 +201,8 @@ int main()
                                 }
                                 
                             }
-                            sf:: Event ppG;
-                             while (gameWin.pollEvent(ppG))
-                            {
-                                if (event.type == sf::Event::Closed)
-                                {
-                                    gameWin.close();
-                                }
-                                else if (event.type == sf::Event::MouseButtonPressed)
-                                {
-                                    if (event.mouseButton.button == sf::Mouse::Left)
-                                    {
-                                        if (gameWin.hasFocus() && btn.pressedBuy(sf::Mouse::getPosition(gameWin).x,sf::Mouse::getPosition(gameWin).y ))
-                                        {
-                                            std::cout << "Button clicked! loser" << std::endl;
-                                        }
-                                    }
-                                }
-                            }
-
+                            // <-------->
+                        }
                     }
                     if(menu_window.hasFocus() && m.pressedInstructions(sf::Mouse::getPosition(menu_window).x,sf::Mouse::getPosition(menu_window).y ))
                     {
@@ -235,9 +233,3 @@ int main()
 
     return 0;
     };
-
-void updateView(sf::RenderWindow& window, sf::View& view)
-{
-    float aspectRatio = static_cast<float>(window.getSize().x) / window.getSize().y;
-    view.setSize(320 * aspectRatio, 320);
-};

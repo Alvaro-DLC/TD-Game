@@ -24,7 +24,8 @@ class Buy
 
         }
         bool pressedBuy(float x, float y){
-            if(x > 390.f && x <= 422.f && y >= 110.f && y <= 155.f) return true; else return false;}
+            // if(x > 390.f && x <= 422.f && y >= 110.f && y <= 155.f) return true; else return false;}
+             if(x > 200.f && x <= 960.f && y >= 22.f && y <= 400.f) return true; else return false;}
 
           void set(float x,float y)                                                                                  
         {

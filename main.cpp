@@ -82,31 +82,49 @@ int main()
                             {
                                 gameWin.draw(round1[i].getEnemy());
                             }
-                            gameWin.display();
+                            
 
 
-                            // attempting buttonbelow
+                            
+                            
+                            // gameWin.draw(monkey1.getTower());
+                            // monkey1.set(50,100);
                             gameWin.draw(btn.getBuyBtn());
-                            btn.set(30,50);
+                            btn.set(34,122);
+                            gameWin.display();
+                            // <---Allows enemies to move--->
+                            if(enemy_timer.getElapsedTime().asSeconds() >= 2 && enemy_onscreen < 10)
+                            {
+                                enemy_onscreen++;
+                                round1[enemy_onscreen].setMoving(true);
+                                cout << "added enemy " << enemy_onscreen << endl;
+                                enemy_timer.restart();
+                            }
+                            // <---------------------------->
+                            // attempting buttonbelow
+                            // attempting buttonbelow
+                            
                             
                             
                             bool showM = false;
-                            if (event.type == sf::Event::MouseButtonPressed)
-                            {
-                                if (event.mouseButton.button == sf::Mouse::Left)
-                                {
-                                    // Check if the mouse clicked the button
-                                    if (gameWin.hasFocus() && btn.pressedBuy(sf::Mouse::getPosition(gameWin).x,sf::Mouse::getPosition(gameWin).y ))
-                                    {
-                                        std::cout << "Button clicked! loser" << std::endl;
-                                        showM = true; // Activate the menu
-                                        
-                                    };
-                                };
-                            };
-                            gameWin.clear();
-                            gameWin.draw(btn.getBuyBtn());
-                            btn.set(30,50);
+                            // switch(event.type)
+                            // {
+                            //     case sf::Event::MouseButtonPressed:
+                                    
+                            //         if (event.mouseButton.button == sf::Mouse::Left)
+                            //         {
+                            //             // Check if the mouse clicked the button
+                            //             if (gameWin.hasFocus() && btn.pressedBuy(sf::Mouse::getPosition(gameWin).x,sf::Mouse::getPosition(gameWin).y ))
+                            //             {
+                            //                 std::cout << "Button clicked! loser" << std::endl;
+                            //                 showM = true; // Activate the menu
+                                            
+                            //             };
+                            //         };
+                            // };
+                            // // gameWin.clear();
+                            // gameWin.draw(btn.getBuyBtn());
+                            // btn.set(30,50);
                             
                             if (showM)
                             {
@@ -151,7 +169,8 @@ int main()
                                     if (round1[x].getMoving() && round1[x].getTurn() < 250)
                                         {
                                             round1[x].move();
-                                            cout << "enemy " << x << " moved\n";
+
+                                            // cout << "enemy " << x << " moved\n";
                                         }
                                         
                                 }
@@ -181,14 +200,6 @@ int main()
                 
                                 }
                                 
-                                else if(sf::Event::MouseButtonReleased == evGame.type && gameWin.hasFocus())
-                                {
-                                    // mPlayer.walk();
-                                    gameWin.clear(sf::Color(255.f, 255.f, 255.f));
-                                    // gameWin.draw(mPlayer.getPlayer());
-                                    gameWin.display();
-                                }
-                                
                             }
                             // <-------->
                         }
@@ -210,6 +221,7 @@ int main()
                         }
                     }
                     break;
+                }
             }
             menu_window.clear();
             menu_window.draw((m.getPlayBtn()));

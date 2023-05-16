@@ -26,7 +26,7 @@ int main()
     Towers monkey1;
     // Enemies 
     int enemy_onscreen = -1;
-    Enemy enemy;
+    Enemy enemy(0);
     vector<Enemy> round1;
     // <---adds enemy 10--->
     for(int i = 0; i < 10; i++)
@@ -228,8 +228,6 @@ int main()
             menu_window.draw((m.getInstructionsBtn()));
             menu_window.display();
 
-        }
-    }
 
-    return 0;
-    };
+            }        
+        }

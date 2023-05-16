@@ -1,7 +1,7 @@
 #include <iostream>
 #include "menu.hpp"
 #include "towers.hpp"
-#include "enemy_mobs.hpp"
+#include "Enemy.hpp"
 #include "buy.hpp"
 #include <SFML/Graphics.hpp>
 
@@ -26,8 +26,8 @@ int main()
     Towers monkey1;
     // Enemies 
     int enemy_onscreen = -1;
-    EnemyMobs enemy;
-    vector<EnemyMobs> round1;
+    Enemy enemy;
+    vector<Enemy> round1;
     // <---adds enemy 10--->
     for(int i = 0; i < 10; i++)
     {

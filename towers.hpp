@@ -10,8 +10,6 @@ class Towers
     public:
     Towers()
     {
-            i =0;
-
             if (!towerText.loadFromFile("monkey.png"))
             {
                     // error...
@@ -32,8 +30,6 @@ class Towers
         sf::Clock timer;
         sf::Sprite tower;
         sf::Texture towerText;
-        int i, turn;
-
 };
 
 #endif
